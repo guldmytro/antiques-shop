@@ -1,5 +1,60 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 {% load shop_tags %}
+{% load thumbnail %}
+{% block title %}{{ product.name }}{% endblock %}
 {% block content %}
-Product page
+    <main class="product">
+        <div class="container">
+            <div class="product__row">
+                <div class="product-gallery">
+                    {% with product.photos.all|slice:"0:3" as photos %}
+                    <div class="gallery-wrapper">
+                        <div class="product-gallery__main" data-slide="1" data-max="{{ photos.count }}">
+                            {% for photo in photos %}
+                                <img id="slide-{{ forloop.counter }}" src="{{ photo.file|thumbnail_url:'medium' }}" alt="{{ photo.alt }}">
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="product-gallery__thumbs thumbs">
+                        {% for photo in photos %}
+                            <img src="{{ photo.file|thumbnail_url:'small' }}" class="thumbs__img" data-anchor="#slide-{{ forloop.counter }}" alt="антикварные подарки">
+                        {% endfor %}
+                    </div>
+                        {% if photos.count > 1 %}
+                            <div class="product-gallery__nav">
+                                <button type="button" class="product-gallery__btn prev" aria-label="предыдущий слайд"></button>
+                                <button type="button" class="product-gallery__btn next" aria-label="следующий слайд"></button>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="product-info">
+                    <h1 class="product__title">{{ product.name }}</h1>
+                    <div class="product__desc">
+                        {{ product.description|markdown }}
+                    </div>
+                    {% if product.tags %}
+                    <ul class="products__tags product-tags">
+                        {% for tag in product.tags.all %}
+                            <li class="product-tags__item">
+                                <a href="{% url 'shop:by_tag' slug=tag.slug  %}" class="product-tags__link">{{ tag.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <hr>
+                    <div class="product-info__controls">
+                        <div class="product__price">
+                            {{ product.get_price_html|safe }}
+                        </div>
+                        <img src="{% static 'img/visa-mastercard.png' %}" alt="виза и мастеркард" class="product__payments" loading="lazy">
+                    </div>
+                    <button type="button" class="product-info__add-to-cart btn">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- /.product -->
+    {% include 'section/consulting.html' %}
 {% endblock %}

@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit',
     'shop.apps.ShopConfig',
+    'django_cleanup.apps.CleanupConfig',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_HTTPONLY = True
+
+TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(BASE_DIR, 'media/')
+
+# Easy thumbnail settings
+THUMBNAIL_ALIASES = {
+    '': {
+        'small': {'size': (300, 300), 'crop': False},
+        'medium': {'size': (900, 900), 'crop': False},
+    },
+}
