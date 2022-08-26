@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'taggit',
     'shop.apps.ShopConfig',
+    'attribute.apps.AttributeConfig',
     'django_cleanup.apps.CleanupConfig',
     'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
+    'shop.middleware.AjaxMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

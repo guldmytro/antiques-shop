@@ -3,6 +3,10 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.utils.html import mark_safe
+from django.templatetags.static import static
+from django.contrib import admin
+from attribute.models import *
 
 
 class Product(models.Model):
@@ -27,6 +31,30 @@ class Product(models.Model):
     sales = models.PositiveIntegerField(verbose_name='Количество продаж',
                                         editable=False, null=True, blank=True,
                                         default=0)
+    holiday = models.ManyToManyField(Holiday,
+                                     related_name='products',
+                                     verbose_name='К праздникам',
+                                     blank=True)
+    age = models.ManyToManyField(Age,
+                                 related_name='products',
+                                 verbose_name='По возрасту',
+                                 blank=True)
+    event = models.ManyToManyField(Event,
+                                   related_name='products',
+                                   verbose_name='К памятным событиям',
+                                   blank=True)
+    travel = models.ManyToManyField(Travel,
+                                    related_name='products',
+                                    verbose_name='Путешественникам',
+                                    blank=True)
+    subject = models.ManyToManyField(Subject,
+                                     related_name='products',
+                                     verbose_name='По темам',
+                                     blank=True)
+    profession = models.ManyToManyField(Profession,
+                                        related_name='products',
+                                        verbose_name='По профессиям',
+                                        blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
@@ -61,6 +89,15 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.pk, self.slug])
 
+    @admin.display(description='Изображение')
+    def image_tag(self):
+        if self.photos.first():
+            url = self.photos.first().file.url
+        else:
+            url = static('img/no-image.jpg')
+        tag = f'<img src="{url}" width="50" height="50">'
+        return mark_safe(tag)
+
 
 class Photo(models.Model):
     product = models.ForeignKey(Product, related_name='photos',
@@ -75,4 +112,4 @@ class Photo(models.Model):
         ordering = ('created',)
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
-
+        

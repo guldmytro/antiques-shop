@@ -13,12 +13,16 @@
                         <div class="product-gallery__main" data-slide="1" data-max="{{ photos.count }}">
                             {% for photo in photos %}
                                 <img id="slide-{{ forloop.counter }}" src="{{ photo.file|thumbnail_url:'medium' }}" alt="{{ photo.alt }}">
+                            {% empty %}
+                                <img id="slide-1" src="{% static 'img/no-image.jpg' %}" alt="картинка">
                             {% endfor %}
                         </div>
                     </div>
                     <div class="product-gallery__thumbs thumbs">
                         {% for photo in photos %}
-                            <img src="{{ photo.file|thumbnail_url:'small' }}" class="thumbs__img" data-anchor="#slide-{{ forloop.counter }}" alt="антикварные подарки">
+                            <img src="{{ photo.file|thumbnail_url:'small' }}" class="thumbs__img" data-anchor="#slide-{{ forloop.counter }}" alt="{{ photo.alt }}">
+                        {% empty %}
+                            <img src="{% static 'img/no-image.jpg' %}" class="thumbs__img" data-anchor="#slide-1" alt="картинка">
                         {% endfor %}
                     </div>
                         {% if photos.count > 1 %}

@@ -1,0 +1,59 @@
+{% load static %}
+<aside class="catalog-aside">
+    <div class="catalog-aside-bg"></div>
+    <button type="button" class="catalog-stats__filters-btn" aria-label="открыть боковые фильтры">
+        <img src="{% static 'img/icon-filter.png' %}" alt="фильтр">
+        <span>Фильтры</span>
+    </button>
+    <div class="catalog-aside-inner">
+        <div class="filter-section">
+            <h2 class="filter-group__title">Подарки по бюджетам:</h2>
+            <ul class="filters-group">
+                <li class="filters-group__item filters-item">
+                    <label class="filters-item__label">
+                        <input type="checkbox" name="price" data-title="от 0 до 100€" value="0-100" class="filters-item__checkbox">
+                        <span class="filters-item__pseudocheckbox"></span>
+                        <span class="filters-item__text">от 0 до 100€</span>
+                    </label>
+                </li>
+                <li class="filters-group__item filters-item">
+                    <label class="filters-item__label">
+                        <input type="checkbox" name="price" data-title="от 100 до 500€" value="100-500" class="filters-item__checkbox">
+                        <span class="filters-item__pseudocheckbox"></span>
+                        <span class="filters-item__text">от 100 до €500€</span>
+                    </label>
+                </li>
+                <li class="filters-group__item filters-item">
+                    <label class="filters-item__label">
+                        <input type="checkbox" name="price" data-title="от 500 до 1000€" value="500-1000" class="filters-item__checkbox">
+                        <span class="filters-item__pseudocheckbox"></span>
+                        <span class="filters-item__text">от 500 до 1000€</span>
+                    </label>
+                </li>
+                <li class="filters-group__item filters-item">
+                    <label class="filters-item__label">
+                        <input type="checkbox" name="price" data-title="больше 1000€" value="1000-99999999" class="filters-item__checkbox">
+                        <span class="filters-item__pseudocheckbox"></span>
+                        <span class="filters-item__text">больше 1000€</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        {% for filter in filters %}
+            <div class="filter-section">
+                <h2 class="filter-group__title">{{ filter.title }}:</h2>
+                <ul class="filters-group">
+                    {% for option in filter.queryset %}
+                        <li class="filters-group__item filters-item">
+                            <label class="filters-item__label">
+                                <input type="checkbox" name="{{ filter.name }}" data-title="{{ option.name }}" value="{{ option.slug }}" class="filters-item__checkbox">
+                                <span class="filters-item__pseudocheckbox"></span>
+                                <span class="filters-item__text">{{ option.name }}</span>
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</aside>

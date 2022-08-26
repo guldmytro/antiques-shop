@@ -1,0 +1,29 @@
+{% load static %}
+{% load thumbnail %}
+{% if products %}
+    <ul class="products-group">
+        {% for product in products %}
+            <li class="products-group__item">
+                <a href="{{ product.get_absolute_url }}" class="product__thumb product-thumb">
+                    {% if product.photos.first %}
+                        <img src="{{ product.photos.first.file|thumbnail_url:'medium' }}" alt="{{ product.photos.first.alt }}" loading="lazy" class="product-thumb__img">
+                    {% else %}
+                        <img src="{% static 'img/no-image.jpg' %}" alt="картинка" loading="lazy" class="product-thumb__img">
+                    {% endif %}
+                </a>
+                <h3 class="product__title product-title">
+                    <a href="{{ product.get_absolute_url }}" class="product-title__link">{{ product.name }}</a>
+                </h3>
+                <div class="product__controls product-controls">
+                    <div class="product-controls__price">
+                        {{ product.get_price_html|safe }}
+                    </div>
+                    <button type="button" class="product-controls__add-to-cart add-to-cart" aria-label="добавить декоративные часы с цветочной росписью и камнями в корзину"></button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% include 'product/pagination.html' with page=products %}
+{% else %}
+    <p>По Вашему запросу товаров не найдено...</p>
+{% endif %}

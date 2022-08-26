@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Photo
+from .models import Product, Photo, Holiday
 
 
 class PhotoInline(admin.TabularInline):
@@ -8,9 +8,9 @@ class PhotoInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price_regular', 'price_sale', 'created']
+    list_display = ['image_tag', 'name', 'price_regular', 'price_sale', 'created']
+    list_display_links = ['image_tag', 'name']
     list_filter = ['created', 'updated']
     list_editable = ['price_regular', 'price_sale']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [PhotoInline]
-
