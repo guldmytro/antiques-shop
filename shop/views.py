@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
-from .utils import get_filters, filter_query, get_page_link_strings, order_query
+from .utils import get_filters, filter_query, get_page_link_strings, order_query, filter_by_search_form
 from django.urls import reverse
+from .forms import SearchForm
 
 
 def catalog(request, slug=None):
@@ -18,8 +19,17 @@ def catalog(request, slug=None):
         tag = get_object_or_404(Tag, slug=slug)
         title = tag.name.capitalize()
         object_list = object_list.filter(tags__in=[tag])
+    
+    query_string = None
+    if request.GET.get('query'):
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            cd = search_form.cleaned_data
+            query_string = cd['query']
+            object_list = filter_by_search_form(object_list, query_string)
+            title = f'Результаты поиска: <em>"{query_string}"</em>'
     if not request.is_ajax():
-        filters = get_filters(tag)
+        filters = get_filters(tag, query_string)
 
     if '?' in request.get_full_path():
         object_list = filter_query(object_list, query_filters)
@@ -60,7 +70,6 @@ def product_detail(request, pk, slug):
     ]
     if product.tags.count():
         tag = product.tags.first()
-        print(tag.slug)
         breadcrumbs.append({
             'label': tag.name,
             'url': reverse('shop:by_tag', args=[tag.slug]),

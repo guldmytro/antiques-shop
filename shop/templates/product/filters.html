@@ -40,20 +40,22 @@
             </ul>
         </div>
         {% for filter in filters %}
-            <div class="filter-section">
-                <h2 class="filter-group__title">{{ filter.title }}:</h2>
-                <ul class="filters-group">
-                    {% for option in filter.queryset %}
-                        <li class="filters-group__item filters-item">
-                            <label class="filters-item__label">
-                                <input type="checkbox" name="{{ filter.name }}" data-title="{{ option.name }}" value="{{ option.slug }}" class="filters-item__checkbox">
-                                <span class="filters-item__pseudocheckbox"></span>
-                                <span class="filters-item__text">{{ option.name }}</span>
-                            </label>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% if filter.queryset.count %}
+                <div class="filter-section">
+                    <h2 class="filter-group__title">{{ filter.title }}:</h2>
+                    <ul class="filters-group">
+                        {% for option in filter.queryset %}
+                            <li class="filters-group__item filters-item">
+                                <label class="filters-item__label">
+                                    <input type="checkbox" name="{{ filter.name }}" data-title="{{ option.name }}" value="{{ option.slug }}" class="filters-item__checkbox">
+                                    <span class="filters-item__pseudocheckbox"></span>
+                                    <span class="filters-item__text">{{ option.name }}</span>
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 </aside>

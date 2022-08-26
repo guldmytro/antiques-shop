@@ -2,7 +2,7 @@ from attribute.models import *
 from django.db.models import Q
 
 
-def get_filters(tag):
+def get_filters(tag, query):
     attributes = [
         {
             'name': 'holiday',
@@ -44,14 +44,24 @@ def get_filters(tag):
     for attribute in attributes:
         if tag:
             attribute_values = attribute['obj'].objects.filter(products__tags__in=[tag])
+        elif query:
+            attribute_values = attribute['obj'].objects.filter(products__name__icontains=query)
         else:
             attribute_values = attribute['obj'].objects.filter(products__price__gt=0)
-        attribute['queryset'] = attribute_values.distinct()
+        attribute['queryset'] = attribute_values.order_by('name').distinct()
         attribute.pop('obj')
     return attributes
 
 
 def filter_query(queryset, query_dict):
+    FILTERS = [
+        'holiday',
+        'age',
+        'event',
+        'travel',
+        'subject',
+        'profession'
+    ]
     for key, values in query_dict:
         # Если выборка пустая, фильтровать нету смысла
         if queryset.count() == 0:
@@ -66,11 +76,16 @@ def filter_query(queryset, query_dict):
                     q |= Q(price__gte=prices['min'], price__lt=prices['max'])
 
         # Если ключ не сортировка и не сортировка, значит атрибут
-        elif key != 'order' and key != 'page':
+        elif key in FILTERS:
             for val in values:
                 query_key = f'{key}__slug'
                 q |= Q(**{query_key: val})
         queryset = queryset.filter(q)
+    return queryset
+
+
+def filter_by_search_form(queryset, query):
+    queryset = queryset.filter(name__icontains=query)
     return queryset
 
 

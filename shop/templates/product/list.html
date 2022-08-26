@@ -1,10 +1,18 @@
 {% extends 'layout/base.html' %}
-{% block title %}{% firstof title 'Главная' %}{% endblock %}
+{% if title %}
+    {% block title %}{{ title|striptags }}{% endblock %}
+{% endif %}
 {% block content %}
     <main class="catalog">
         <div class="container">
             <div class="section-header">
-                <h1 class="section-header__title">{% firstof title 'Каталог товаров' %}</h1>
+                <h1 class="section-header__title">
+                    {% if title %}
+                        {{ title|safe }}
+                    {% else %}
+                        Каталог товаров
+                    {% endif %}
+                </h1>
             </div>
             {% include 'product/filters.html' %}
             <div class="catalog-main">

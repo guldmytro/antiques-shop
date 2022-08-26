@@ -51,10 +51,7 @@
                     </div>
                     <div class="header-search">
                         <div class="container">
-                            <form action="." method="get" class="form-search">
-                                <input type="search" class="form-search__input" name="s" placeholder="Поиск">
-                                <button type="submit" class="form-search__submit btn">Найти</button>
-                            </form>
+                            {% include 'form/search.html' %}
                             <button type="button" class="header-search__btn" aria-label="close search form">
                                 <span></span>
                             </button>
