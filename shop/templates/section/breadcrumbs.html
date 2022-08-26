@@ -1,0 +1,17 @@
+{% if breadcrumbs %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="breadcrumbs-group">
+                {% for breadcrumb in breadcrumbs %}
+                    {% if breadcrumb.type == 'link' %}
+                        <a href="{{ breadcrumb.url }}" class="breadcrumbs__link">{{ breadcrumb.label }}</a>
+                    {% else %}
+                        <span class="breadcrumbs__text">{{ breadcrumb.label }}</span>
+                    {% endif %}
+                    
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- /.breadcrumbs -->
+{% endif %}

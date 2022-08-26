@@ -38,7 +38,7 @@
                     </div>
                     <div class="header-menu-wrapper">
                         <ul class="header-menu">
-                            <li class="header-menu__item active menu-item">
+                            <li class="header-menu__item menu-item{% if section == 'catalog' %} active{% endif %}">
                                 <a href="{% url 'shop:catalog' %}" class="menu-item__link">Каталог товаров</a>
                             </li>
                             <li class="header-menu__item menu-item">

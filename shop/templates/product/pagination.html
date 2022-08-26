@@ -2,12 +2,12 @@
     <ul class="pagination">
         <li class="pagination__item pagination-item">
             {% if page.has_previous %}
-                <a href="?page={{ page.previous_page_number }}" class="pagination-item__link" aria-label="предыдущая страница"></a>
+                <a href="{{ page_link_prefix }}{{ pagination_link_startwith }}page={{ page.previous_page_number }}" class="pagination-item__link" aria-label="предыдущая страница"></a>
             {% endif %}
         </li>
         <li class="pagination__item">
             {% if page.has_next %}
-                <a href="?page={{ page.next_page_number }}" class="pagination-item__link" aria-label="следующая страница"></a>
+                <a href="{{ page_link_prefix }}{{ pagination_link_startwith }}page={{ page.next_page_number }}" class="pagination-item__link" aria-label="следующая страница"></a>
             {% endif %}
         </li>
     </ul>

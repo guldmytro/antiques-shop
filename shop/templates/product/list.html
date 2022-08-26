@@ -1,20 +1,21 @@
 {% extends 'layout/base.html' %}
-{% load static %}
+{% block title %}{% firstof title 'Главная' %}{% endblock %}
 {% block content %}
     <main class="catalog">
         <div class="container">
             <div class="section-header">
-                <h1 class="section-header__title">Каталог товаров</h1>
+                <h1 class="section-header__title">{% firstof title 'Каталог товаров' %}</h1>
             </div>
             {% include 'product/filters.html' %}
             <div class="catalog-main">
                 <div class="catalog-stats">
-                    <p class="catalog-stats__count">Найдено: {{ count }}</p>
+                    <p class="catalog-stats__count">Найдено: <span id="product-count">{{ count }}</span></p>
                     <div class="ordering-wrapper">
-                        <select class="catalog-stats__ordering">
-                            <option value="date">По дате: от новых к старым</option>
-                            <option value="date">По дате: от старых к новым</option>
-                            <option value="date">По дате: по цене</option>
+                        <select class="catalog-stats__ordering" name="order">
+                            <option value="date-desc">По дате: от новых к старым</option>
+                            <option value="date-asc"{% if request.GET.order == 'date-asc' %} selected {% endif %}>По дате: от старых к новым</option>
+                            <option value="price-asc"{% if request.GET.order == 'price-asc' %} selected {% endif %}>По возростанию цены</option>
+                            <option value="price-desc"{% if request.GET.order == 'price-desc' %} selected {% endif %}>По убыванию цены</option>
                         </select>
                     </div>
                 </div>
@@ -26,39 +27,6 @@
         </div>
     </main>
     <!-- /.catalog -->
-    <section class="features">
-        <div class="container">
-            <div class="features__row">
-                <div class="features-images">
-                    <div class="thumb">
-                        <img src="{% static 'img/gift-1.jpg' %}" alt="антикварные вещи" class="features-images__img">
-                    </div>
-                    <div class="thumb">
-                        <img src="{% static 'img/gift-2.jpg' %}" alt="антикварные вещи" class="features-images__img">
-                    </div>
-                </div>
-                <div class="features-text">
-                    <div class="section-header">
-                        <h2 class="section-header__title">Раритетные подарки и антикварные суверины</h2>
-                        <p class="section-header__subtitle">старательно собраны в нашем каталоге</p>
-                    </div>
-                    <p class="features-text__p">
-                        Каждая уходящая эпоха оставляет после себя уникальное материальное наследие. Эти раритетные вещи, составляющие культурный пласт прошлого и вдохновляющие последующие поколения на новые изобретения, по сути, являются лишь усовершенствованными копиями своих первоисточников.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /.features -->
-    <section class="consulting">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-header__title">
-                    Получите консультацию <em>по подбору подарка</em>
-                </div>
-            </div>
-            <a href="#" class="consulting-link">+38 099 999 99 99</a>
-        </div>
-    </section>
-    <!-- /.consulting -->
+    {% include 'section/features.html' %}
+    {% include 'section/consulting.html' %}
 {% endblock %}

@@ -4,6 +4,7 @@
 {% load thumbnail %}
 {% block title %}{{ product.name }}{% endblock %}
 {% block content %}
+    {% include 'section/breadcrumbs.html' %}
     <main class="product">
         <div class="container">
             <div class="product__row">

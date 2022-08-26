@@ -1,7 +1,7 @@
 {% load static %}
 {% load thumbnail %}
 {% if products %}
-    <ul class="products-group">
+    <ul class="products-group" data-count="{{ count }}">
         {% for product in products %}
             <li class="products-group__item">
                 <a href="{{ product.get_absolute_url }}" class="product__thumb product-thumb">
@@ -25,5 +25,8 @@
     </ul>
     {% include 'product/pagination.html' with page=products %}
 {% else %}
-    <p>По Вашему запросу товаров не найдено...</p>
+    <div class="nothing-found">
+        <img src="{% static 'img/empty.png' %}" width="512" height="512" alt="увеличительно скло">
+        <p>По Вашему запросу товаров не найдено...</p>
+    </div>
 {% endif %}
