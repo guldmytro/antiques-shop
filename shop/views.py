@@ -5,6 +5,7 @@ from taggit.models import Tag
 from .utils import get_filters, filter_query, get_page_link_strings, order_query, filter_by_search_form
 from django.urls import reverse
 from .forms import SearchForm
+from cart.forms import CartAddProductForm
 
 
 def catalog(request, slug=None):
@@ -13,7 +14,7 @@ def catalog(request, slug=None):
     filters = None
     template = 'product/list.html'
     query_filters = request.GET.lists()
-    title = None
+    title = 'Каталог товаров'
     
     if slug:
         tag = get_object_or_404(Tag, slug=slug)
@@ -47,12 +48,14 @@ def catalog(request, slug=None):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
     
+    add_to_cart_form = CartAddProductForm()
     return render(request,
                   template,
                   {'page': page,
                    'title': title,
                    'page_link_prefix': page_link_prefix,
                    'pagination_link_startwith': pagination_link_startwith,
+                   'add_to_cart_form': add_to_cart_form,
                    'section': 'catalog',
                    'products': products,
                    'count': count,
@@ -60,6 +63,7 @@ def catalog(request, slug=None):
 
 
 def product_detail(request, pk, slug):
+    add_to_cart_form = CartAddProductForm()
     product = get_object_or_404(Product, id=pk, slug=slug)
     breadcrumbs = [
         {
@@ -81,5 +85,6 @@ def product_detail(request, pk, slug):
     })
     return render(request, 'product/detail.html',
                   {'product': product,
+                   'add_to_cart_form': add_to_cart_form,
                    'breadcrumbs': breadcrumbs,
                    'section': 'product'})

@@ -1,0 +1,65 @@
+{% extends 'layout/base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+    {% include 'section/breadcrumbs.html' %}
+    <main class="cart">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header__title">Корзина</h1>
+            </div>
+            {% if cart.get_cart_cnt %}
+                <div class="cart-form">
+                    <ul class="cart-list">
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                                <li class="cart-list__item cart-item">
+                                    <div class="cart-item__thumb cart-thumb">
+                                        {% if product.photos.first %}
+                                            <img src="{{ product.photos.first.file|thumbnail_url:'medium' }}" alt="{{ product.photos.first.alt }}" loading="lazy" class="cart-thumb__img">
+                                        {% else %}
+                                            <img src="{% static 'img/no-image.jpg' %}" alt="картинка" loading="lazy" class="cart-thumb__img">
+                                        {% endif %}
+                                    </div>
+                                    <h2 class="cart-item__title">
+                                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                    </h2>
+                                    <form action="{% url 'cart:add' product.id %}" class="cart-item__update-form" method="post">
+                                        {{ item.update_quantity_form.as_p }}
+                                        {% csrf_token %}
+                                        <button type="submit" class="update-cnt">Обновить</button>
+                                    </form>
+                                    <div class="cart-item__price">
+                                        {% if item.total_price < item.total_price_regular %}
+                                            <ins>€{{ item.total_price }}</ins>
+                                            <del>€{{ item.total_price_regular }}</del>
+                                        {% else %}
+                                            <span>{{ item.total_price }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <form action="{% url 'cart:remove' product.id %}" method="post" class="remove-item-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="cart-item__delete" aria-label="убрать товар {{ product.name }} из корзины"></button>
+                                    </form>
+                                </li>
+                            {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <div class="cart-totals">
+                        <div class="cart-totals__header">
+                            <h2 class="cart-totals__title">Итого:</h2>
+                            <p class="cart-totals__value">€{{ cart.get_total_price }}</p>
+                        </div>
+                        <div class="cart-totals__checkout">
+                            <a href="checkout.html" class="cart-checkout__link btn">Оформить заказ</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                    <p class="empty-cart">Ваша корзина пуста. Вы можете перейти в <a href="{% url 'shop:catalog' %}">каталог</a>.</p>
+            {% endif %}
+        </div>
+    </main>
+    <!-- /.cart -->
+{% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'taggit',
     'shop.apps.ShopConfig',
     'attribute.apps.AttributeConfig',
+    'cart.apps.CartConfig',
     'django_cleanup.apps.CleanupConfig',
     'easy_thumbnails',
 ]
@@ -147,3 +148,5 @@ THUMBNAIL_ALIASES = {
         'medium': {'size': (900, 900), 'crop': False},
     },
 }
+
+CART_SESSION_ID = 'cart'

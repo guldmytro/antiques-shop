@@ -1,0 +1,5 @@
+<form action="{% url 'cart:add' product.id %}" method="post" class="product__archive-cart-form">
+    {{ add_to_cart_form.as_p }}
+    {% csrf_token %}
+    <button type="submit" class="product-controls__add-to-cart add-to-cart" aria-label="добавить {{ product.name }} в корзину"></button>
+</form>

@@ -18,7 +18,7 @@
                     <div class="product-controls__price">
                         {{ product.get_price_html|safe }}
                     </div>
-                    <button type="button" class="product-controls__add-to-cart add-to-cart" aria-label="добавить декоративные часы с цветочной росписью и камнями в корзину"></button>
+                    {% include 'form/archive-add-to-cart.html' %}
                 </div>
             </li>
         {% endfor %}

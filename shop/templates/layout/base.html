@@ -61,7 +61,7 @@
                         <button class="header-controls__button" id="open-search" aria-label="открыть поиск" type="button">
                             <img src="{% static 'img/icon-search.png' %}" class="header-controls__img" alt="поиск">
                         </button>
-                        <a href="cart.html" class="header-controls__link" aria-label="корзина">
+                        <a href="{% url 'cart:list' %}" class="header-controls__link" aria-label="корзина">
                             <img src="{% static 'img/icon-cart.png' %}" class="header-controls__img" alt="корзина">
                         </a>
                     </div>
