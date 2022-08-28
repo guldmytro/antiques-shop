@@ -23,7 +23,6 @@ def cart_list(request):
             'label': 'Корзина',
             'type': 'text'
         },
-
     ]
     return render(request, 'cart/list.html', {
         'cart': cart,

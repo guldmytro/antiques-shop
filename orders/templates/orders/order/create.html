@@ -1,0 +1,41 @@
+{% extends 'layout/base.html' %}
+{% block title %}Оформление заказа{% endblock %}
+{% block content %}
+    {% include 'section/breadcrumbs.html' %}
+    <main class="checkout">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header__title">
+                    Оформление заказа
+                </h1>
+            </div>
+            <div class="checkout-row">
+                <form action="{% url 'orders:order_create' %}" method="post" class="checkout-form">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <p>
+                        <button type="submit" class="btn">Создать заказ</button>
+                    </p>
+                </form>
+                <div class="checkout-order">
+                    <h2 class="checkout-order__title">Ваш заказ:</h2>
+                    <ul class="checkout-order__list order-list">
+                        {% for item in cart %}
+                        <li class="order-list__item order-item">
+                            <span class="order-item__header">
+                                <span class="order-item__cnt">{{ item.quantity }}x</span>
+                                <span class="order-item__title">{{ item.product.name }}</span>
+                            </span>
+                            <div class="order-item__price">€{{ item.total_price }}</div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="checkout-order__total">
+                        Итого: €{{ cart.get_total_price }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- /.checkout -->
+{% endblock %}

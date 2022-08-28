@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'attribute.apps.AttributeConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
     'django_cleanup.apps.CleanupConfig',
     'easy_thumbnails',
 ]

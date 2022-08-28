@@ -105,7 +105,8 @@ class Photo(models.Model):
     file = models.ImageField(upload_to='photos/%Y/%m/%d/',
                              verbose_name='Файл')
     alt = models.CharField(max_length=200,
-                           verbose_name='Альтернативный текст')
+                           verbose_name='Альтернативный текст',
+                           blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
 
     class Meta:

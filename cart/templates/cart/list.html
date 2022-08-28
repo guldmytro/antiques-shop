@@ -52,7 +52,7 @@
                             <p class="cart-totals__value">€{{ cart.get_total_price }}</p>
                         </div>
                         <div class="cart-totals__checkout">
-                            <a href="checkout.html" class="cart-checkout__link btn">Оформить заказ</a>
+                            <a href="{% url 'orders:order_create' %}" class="cart-checkout__link btn">Оформить заказ</a>
                         </div>
                     </div>
                 </div>

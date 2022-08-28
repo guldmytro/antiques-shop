@@ -1,0 +1,20 @@
+{% extends 'layout/base.html' %}
+{% block title %}Оформление заказа{% endblock %}
+{% block content %}
+    {% include 'section/breadcrumbs.html' %}
+    <main class="order-complete">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header__title">
+                    Спасибо
+                </h1>
+                <p class="section-header__subtitle">
+                    Ваш заказ был успешно создан. Номер вашего заказа - {{ order.id }}.
+                    <br>
+                    В ближайшее время с Вами свяжется наш менеджер для уточнения деталей заказа.
+                </p>
+            </div>
+        </div>
+    </main>
+    <!-- /.order-complete -->
+{% endblock %}
