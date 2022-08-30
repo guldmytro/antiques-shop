@@ -55,7 +55,11 @@
                         </div>
                         <img src="{% static 'img/visa-mastercard.png' %}" alt="виза и мастеркард" class="product__payments" loading="lazy">
                     </div>
-                    {% include 'form/single-add-to-cart.html' %}
+                    {% if product.available %}
+                        {% include 'form/single-add-to-cart.html' %}
+                    {% else %}
+                        <p>Нет в наличии</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

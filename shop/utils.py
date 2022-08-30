@@ -43,11 +43,11 @@ def get_filters(tag, query):
     ]
     for attribute in attributes:
         if tag:
-            attribute_values = attribute['obj'].objects.filter(products__tags__in=[tag])
+            attribute_values = attribute['obj'].objects.filter(products__available=True, products__tags__in=[tag])
         elif query:
-            attribute_values = attribute['obj'].objects.filter(products__name__icontains=query)
+            attribute_values = attribute['obj'].objects.filter(products__available=True, products__name__icontains=query)
         else:
-            attribute_values = attribute['obj'].objects.filter(products__price__gt=0)
+            attribute_values = attribute['obj'].objects.filter(products__available=True)
         attribute['queryset'] = attribute_values.order_by('name').distinct()
         attribute.pop('obj')
     return attributes

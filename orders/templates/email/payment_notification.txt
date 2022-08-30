@@ -1,0 +1,9 @@
+Уважаемый {{ order.first_name }}!
+
+Мы проверили наличие вашего заказа:
+{% for item in order.items.all %}
+    {{ item.quantity }}x {{ item.product.name }} €{{ item.get_cost }}
+{% endfor %}
+
+Вы сможете оплатить перейдя по ссылке:
+{{ host }}{% url 'orders:order_pay' id=order.id uuid=order.secret_id %}

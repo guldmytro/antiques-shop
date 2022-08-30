@@ -28,6 +28,7 @@ class Product(models.Model):
                                 blank=True, null=True)
     tags = TaggableManager(verbose_name='Теги',
                            blank=True)
+    available = models.BooleanField(default=True, verbose_name='В наличии')
     sales = models.PositiveIntegerField(verbose_name='Количество продаж',
                                         editable=False, null=True, blank=True,
                                         default=0)
@@ -61,7 +62,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        ordering = ('-created',)
+        ordering = ('-available', '-created',)
         index_together = (('id', 'slug'),)
 
     def __str__(self):

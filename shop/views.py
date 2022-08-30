@@ -9,7 +9,7 @@ from cart.forms import CartAddProductForm
 
 
 def catalog(request, slug=None):
-    object_list = Product.objects.all()
+    object_list = Product.objects.filter(available=True)
     tag = None
     filters = None
     template = 'product/list.html'
