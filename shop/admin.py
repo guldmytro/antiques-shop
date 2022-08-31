@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Photo, Holiday
+from .models import Product, Photo, Contact
 
 
 class PhotoInline(admin.TabularInline):
@@ -15,3 +15,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['available', 'price_regular', 'price_sale']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [PhotoInline]
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['phone', 'email', 'telegram']
+    list_display_links = ['phone']

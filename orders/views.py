@@ -3,7 +3,7 @@ from .models import OrderItem, Order
 from cart.cart import Cart
 from orders.forms import OrderCreateForm
 from django.urls import reverse
-from .tasks import order_created
+from .tasks import order_created, order_notification
 import braintree
 from django.conf import settings
 
@@ -26,6 +26,9 @@ def order_create(request):
         },
     ]
     cart = Cart(request)
+    if cart.get_cart_cnt() == 0:
+        return redirect('cart:list')
+
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
@@ -40,6 +43,7 @@ def order_create(request):
                     )
             cart.clear()
             order_created.delay(order.id)
+            order_notification.delay(order.id)
             return render(request, 'orders/order/created.html',
             {'order': order, 'breadcrumbs': breadcrumbs})
     else:

@@ -3,19 +3,43 @@ from .models import Order
 from config.celery import *
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 @app.task
 def order_created(order_id):
     """
-    Задание по отправке e-mail уведомления, когда заказ успешно создан.
+    Задание по отправке e-mail уведомления клиенту, когда заказ успешно создан.
     """
+    admin_user = User.objects.first()
     order = Order.objects.get(id=order_id)
     subject = f'Заказ #{order.id}'
     message = f'Дорогой {order.first_name}, спасибо за оформление заказа на нашем сайте. \n\n' \
               f'Номер Вашего заказа - {order.id},'
-    mail_sent = send_mail(subject, message, 'admin@myshop.com', [order.email])
-    return mail_sent
+    try:
+        mail_sent = send_mail(subject, message, admin_user.email, [order.email])
+        return mail_sent
+    except:
+        return False
+
+
+@app.task
+def order_notification(order_id):
+    """
+    Задание по отправке e-mail уведомления администратору, когда заказ успешно создан.
+    """
+    admin_user = User.objects.first()
+    order = Order.objects.get(id=order_id)
+    subject = f'Заказ #{order.id}'
+    message = 'На Вашем сайте появился новый заказ'
+    try:
+        mail_sent = send_mail(subject, message, admin_user.email, [admin_user.email])
+        return mail_sent
+    except:
+        return False
+
 
 
 @app.task

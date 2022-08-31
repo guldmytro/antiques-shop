@@ -88,3 +88,33 @@ def product_detail(request, pk, slug):
                    'add_to_cart_form': add_to_cart_form,
                    'breadcrumbs': breadcrumbs,
                    'section': 'product'})
+
+
+def about(request):
+    breadcrumbs = [
+        {
+            'label': 'Каталог товаров',
+            'url': reverse('shop:catalog'),
+            'type': 'link'
+        },
+        {
+            'label': 'О нас',
+            'type': 'text'
+        }
+    ]
+    return render(request, 'page/about_page.html', {'section': 'about', 'breadcrumbs': breadcrumbs})
+
+
+def contacts(request):
+    breadcrumbs = [
+        {
+            'label': 'Каталог товаров',
+            'url': reverse('shop:catalog'),
+            'type': 'link'
+        },
+        {
+            'label': 'Контакты',
+            'type': 'text'
+        }
+    ]
+    return render(request, 'page/contacts_page.html', {'section': 'contacts', 'breadcrumbs': breadcrumbs})

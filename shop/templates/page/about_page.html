@@ -1,0 +1,20 @@
+{% extends 'layout/base.html' %}
+{% block title %}О нас{% endblock %}
+{% block content %}
+{% include 'section/breadcrumbs.html' %}
+    <main class="about">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header__title">
+                    О компании
+                </h1>
+            </div>
+            <div class="about-text">
+                <p>Интернет-магазин создан группой профессионалов, работающих на антикварном рынке с 2004 года, при поддержке крупнейших коллекционеров, арт-дилеров и антикварного салона «Коллекционеры». Кроме товаров, представленных на сайте, Вы можете оставить нам любой, самый сложный заказ.
+                    Мы специализируемся на комплектовании частных собраний ДПИ и антикварных библиотек.</p>
+            </div>
+        </div>
+    </main>
+    <!-- /.about -->
+    {% include 'section/consulting.html' %}
+{% endblock %}

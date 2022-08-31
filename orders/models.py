@@ -26,7 +26,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     pay_sent = models.BooleanField(default=False, verbose_name='Отправлен счет')
     paid = models.BooleanField(default=False, verbose_name='Оплачено')
-    braintree_id = models.CharField(max_length=150, verbose_name='Идентификатор оплаты')
+    braintree_id = models.CharField(max_length=150, verbose_name='Идентификатор оплаты', blank=True, null=True)
     secret_id = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Секретный ключ')
 
     class Meta:

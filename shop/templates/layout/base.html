@@ -1,4 +1,5 @@
 {% load static %}
+{% load shop_tags %}
 <!DOCTYPE html>
 <html lang="ru-RU">
 <head>
@@ -17,13 +18,17 @@
         <div class="toper">
             <div class="container">
                 <div class="toper-contacts">
-                    <a href="#" class="toper-contacts__link toper-link" target="_blank" aria-label="наш телеграм">
-                        <img src="{% static 'img/icon-telegram.png' %}" alt="телеграм" class="toper-link__img" loading="lazy">
-                    </a>
-                    <a href="#" class="toper-contacts__link toper-link" target="_blank" aria-label="наш телеграм">
-                        <img src="{% static 'img/icon-phone.png' %}" alt="телефон" class="toper-link__img" loading="lazy">
-                        <span class="toper-link__text">+38 099 999 99 99</span>
-                    </a>
+                    {% if telegram %}
+                        <a href="{{ telegram }}" class="toper-contacts__link toper-link" target="_blank" aria-label="наш телеграм">
+                            <img src="{% static 'img/icon-telegram.png' %}" alt="телеграм" class="toper-link__img" loading="lazy">
+                        </a>
+                    {% endif %}
+                    {% if phone %}
+                        <a href="{{ phone|phone_link }}" class="toper-contacts__link toper-link"aria-label="наш телефон">
+                            <img src="{% static 'img/icon-phone.png' %}" alt="телефон" class="toper-link__img" loading="lazy">
+                            <span class="toper-link__text">{{ phone }}</span>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -41,11 +46,11 @@
                             <li class="header-menu__item menu-item{% if section == 'catalog' %} active{% endif %}">
                                 <a href="{% url 'shop:catalog' %}" class="menu-item__link">Каталог товаров</a>
                             </li>
-                            <li class="header-menu__item menu-item">
-                                <a href="about.html" class="menu-item__link">О нас</a>
+                            <li class="header-menu__item menu-item{% if section == 'about' %} active{% endif %}">
+                                <a href="{% url 'shop:about' %}" class="menu-item__link">О нас</a>
                             </li>
-                            <li class="header-menu__item menu-item">
-                                <a href="contacts.html" class="menu-item__link">Контакты</a>
+                            <li class="header-menu__item menu-item{% if section == 'contacts' %} active{% endif %}">
+                                <a href="{% url 'shop:contacts' %}" class="menu-item__link">Контакты</a>
                             </li>
                         </ul>
                     </div>
@@ -87,27 +92,33 @@
                             <a href="{% url 'shop:catalog' %}" class="menu-item__link">Каталог товаров</a>
                         </li>
                         <li class="footer-menu__item menu-item">
-                            <a href="about.html" class="menu-item__link">О нас</a>
+                            <a href="{% url 'shop:about' %}" class="menu-item__link">О нас</a>
                         </li>
                         <li class="footer-menu__item menu-item">
-                            <a href="contacts.html" class="menu-item__link">Контакты</a>
+                            <a href="{% url 'shop:contacts' %}" class="menu-item__link">Контакты</a>
                         </li>
                     </ul>
                     <p class="footer-copy">© Все права защищены 2022</p>
                 </div>
                 <div class="footer-right">
                     <div class="footer-contacts">
-                        <a href="#" class="footer-contacts__link footer-link" target="_blank" aria-label="наш телеграм">
-                            <img src="{% static 'img/icon-telegram.png' %}" alt="телеграм" class="footer-link__img" loading="lazy">
-                        </a>
-                        <a href="#" class="footer-contacts__link footer-link" target="_blank" aria-label="наш телеграм">
-                            <img src="{% static 'img/icon-phone.png' %}" alt="телефон" class="footer-link__img" loading="lazy">
-                            <span class="footer-link__text">+38 099 999 99 99</span>
-                        </a>
-                        <a href="#" class="footer-contacts__link footer-link" target="_blank" aria-label="наша почта">
-                            <img src="{% static 'img/icon-mail.png' %}" alt="телефон" class="footer-link__img" loading="lazy">
-                            <span class="footer-link__text">info@gmail.com</span>
-                        </a>
+                        {% if telegram %}
+                            <a href="{{ telegram }}" class="footer-contacts__link footer-link" target="_blank" aria-label="наш телеграм">
+                                <img src="{% static 'img/icon-telegram.png' %}" alt="телеграм" class="footer-link__img" loading="lazy">
+                            </a>
+                        {% endif %}
+                        {% if phone %}
+                            <a href="{{ phone|phone_link }}" class="footer-contacts__link footer-link" aria-label="наш телеграм">
+                                <img src="{% static 'img/icon-phone.png' %}" alt="телефон" class="footer-link__img" loading="lazy">
+                                <span class="footer-link__text">{{ phone }}</span>
+                            </a>
+                        {% endif %}
+                        {% if email %}
+                            <a href="mailto:{{ email }}" class="footer-contacts__link footer-link" aria-label="наша почта">
+                                <img src="{% static 'img/icon-mail.png' %}" alt="почта" class="footer-link__img" loading="lazy">
+                                <span class="footer-link__text">{{ email }}</span>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

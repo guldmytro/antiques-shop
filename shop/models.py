@@ -114,4 +114,16 @@ class Photo(models.Model):
         ordering = ('created',)
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
-        
+
+
+class Contact(models.Model):
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    email = models.EmailField(verbose_name='E-mail')
+    telegram = models.URLField(verbose_name='Телеграм')
+
+    def __str__(self):
+        return 'Контакты'
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'

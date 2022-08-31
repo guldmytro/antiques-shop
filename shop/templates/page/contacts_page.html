@@ -1,0 +1,35 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load shop_tags %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+    {% include 'section/breadcrumbs.html' %}
+    <main class="contacts">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header__title">
+                    Контакты
+                </h1>
+            </div>
+            <ul class="contacts-group">
+                {% if phone %}
+                    <li class="contacts-group__item contacts-item">
+                        <div class="contacts-item__thumb">
+                            <img src="{% static 'img/icon-phone-2.png' %}" alt="телефон">
+                        </div>
+                        <a href="{{ phone|phone_link }}" class="contacts-group__link">{{ phone }}</a>
+                    </li>
+                {% endif %}
+                {% if email %}
+                    <li class="contacts-group__item contacts-item">
+                        <div class="contacts-item__thumb">
+                            <img src="{% static 'img/icon-mail.png' %}" alt="почта">
+                        </div>
+                        <a href="mailto:{{ email }}" class="contacts-group__link">{{ email }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </main>
+    <!-- /.contacts -->
+{% endblock %}

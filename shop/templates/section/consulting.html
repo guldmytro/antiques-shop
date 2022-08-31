@@ -1,11 +1,14 @@
-<section class="consulting">
-    <div class="container">
-        <div class="section-header">
-            <div class="section-header__title">
-                Получите консультацию <em>по подбору подарка</em>
+{% load shop_tags %}
+{% if phone %}
+    <section class="consulting">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-header__title">
+                    Получите консультацию <em>по подбору подарка</em>
+                </div>
             </div>
+            <a href="{{ phone|phone_link }}" class="consulting-link">{{ phone }}</a>
         </div>
-        <a href="#" class="consulting-link">+38 099 999 99 99</a>
-    </div>
-</section>
-<!-- /.consulting -->
+    </section>
+    <!-- /.consulting -->
+{% endif %}
