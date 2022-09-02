@@ -18,3 +18,9 @@ def contacts(request):
             'email': contact.email,
             'telegram': contact.telegram,
         }
+    else: 
+        return {
+            'phone': False,
+            'email': False,
+            'telegram': False,
+        }
