@@ -56,7 +56,7 @@ pip-delete-this-directory.txt
 
 #html files
 index.html
-404.html
+shop/static/404.html
 about.html
 cart.html
 checkout.html
