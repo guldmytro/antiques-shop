@@ -1,6 +1,6 @@
 {% load static %}
 {% load thumbnail %}
-{% if products %}
+{% if products.count %}
     <ul class="products-group" data-count="{{ count }}">
         {% for product in products %}
             <li class="products-group__item">
