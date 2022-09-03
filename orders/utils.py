@@ -32,7 +32,7 @@ def test_order_created(order_id):
     message = f'Дорогой {order.first_name}, спасибо за оформление заказа на нашем сайте. \n\n' \
               f'Номер Вашего заказа - {order.id},'
     try:
-        mail_sent = send_mail(subject, message, 'guldmytro@gmail.com', [order.email], False)
+        mail_sent = send_mail(subject, message, settings.EMAIL_HOST_USER, [order.email], False)
         return mail_sent
     except:
         return False

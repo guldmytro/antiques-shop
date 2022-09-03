@@ -43,11 +43,11 @@ def order_create(request):
                         quantity=item['quantity']
                     )
             cart.clear()
-            test_order_created(order.id)
+            sent = test_order_created(order.id)
             order_created.delay(order.id)
             order_notification.delay(order.id)
             return render(request, 'orders/order/created.html',
-            {'order': order, 'breadcrumbs': breadcrumbs})
+            {'order': order, 'breadcrumbs': breadcrumbs, 'sent': sent})
     else:
         form = OrderCreateForm()
     return render(request, 'orders/order/create.html',
