@@ -6,7 +6,6 @@ from django.urls import reverse
 from .tasks import order_created, order_notification
 import braintree
 from django.conf import settings
-from .utils import test_order_created
 
 
 def order_create(request):
@@ -43,11 +42,10 @@ def order_create(request):
                         quantity=item['quantity']
                     )
             cart.clear()
-            sent = test_order_created(order.id)
             order_created.delay(order.id)
             order_notification.delay(order.id)
             return render(request, 'orders/order/created.html',
-            {'order': order, 'breadcrumbs': breadcrumbs, 'sent': sent})
+            {'order': order, 'breadcrumbs': breadcrumbs})
     else:
         form = OrderCreateForm()
     return render(request, 'orders/order/create.html',
