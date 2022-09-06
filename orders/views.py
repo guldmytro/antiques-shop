@@ -87,4 +87,3 @@ def payment_done(request, id, uuid):
 def payment_canceled(request, id, uuid):
     order = get_object_or_404(Order, id=id, secret_id=uuid, paid=False)
     return render(request, 'orders/order/paymnent_canceled.html')
-    
